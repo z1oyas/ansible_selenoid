@@ -1,0 +1,25 @@
+---
+  - name: install docker-compose
+    get_url:
+      url: https://github.com/docker/compose/releases/download/v2.38.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+      dest: /usr/local/bin/docker-compose
+      mode: '0755'
+  - name: add user to docker group
+    user:
+      name: "{{ ansible_user_id }}"
+      groups: docker
+      append: yes
+  - name: change docker.sock permissions
+    file:
+      path: /var/run/docker.sock
+      state: file
+      mode: '0666'
+#  - name: make directory work
+#    file:
+#      path: /root/selenoid
+#      state: directory
+#  - name: create selenoid networks
+#    shell: docker network create "{{ item }}"
+#    loop:
+#      - selenoid1
+#      - selenoid2

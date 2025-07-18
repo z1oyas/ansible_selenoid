@@ -1,0 +1,16 @@
+{
+{% for browser in browsers %}
+  "{{ browser.name }}": {
+    "default": "{{ browser.versions[0] }}",
+    "versions": {
+{% for version in browser.versions %}
+      "{{ version }}": {
+        "image": "selenoid/{{ browser.name }}:{{ version }}",
+        "port": "4444",
+        "path": "/"
+      }{% if not loop.last %},{% endif %}
+{% endfor %}
+    }
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+}

@@ -1,0 +1,58 @@
+---
+  - name: Create directory /root/selenoid
+    file:
+      path: /root/selenoid
+      state: directory
+      mode: '0755'
+  - name: create browsers.json
+    template:
+      src: templates/browsers.json.j2
+      dest: /root/selenoid/browsers.json
+    vars:
+      browsers:
+        - name: "chrome"
+          versions:
+            - "128.0"
+            - "127.0"
+        - name: "firefox"
+          versions:
+            - "47.0"
+  - name: Create grid-router parent directory
+    file:
+      path: /root/selenoid/grid-router
+      state: directory
+      mode: '0755'
+  - name: Create grid-router quota directories
+    file:
+      path: /root/selenoid/grid-router/quota
+      state: directory
+      mode: '0755'
+  - name: copy grid-router quota
+    copy:
+      src: grid-router/quota/test.xml
+      dest: /root/selenoid/grid-router/quota
+      mode: '0644'
+  - name: Create nginx parent directory
+    file:
+      path: /root/selenoid/nginx
+      state: directory
+      mode: '0755'
+  - name: Copy nginx config
+    copy:
+      src: nginx/selenoid.conf
+      dest: /root/selenoid/nginx/selenoid.conf
+      mode: '0644'
+  - name: Generate users.htpasswd
+    template:
+      src: templates/users.htpasswd.j2
+      dest: /root/selenoid/grid-router/users.htpasswd
+      mode: '0644'
+  - name: Copy docker-compose.yml
+    copy:
+      src: docker-compose.yml
+      dest: /root/selenoid/docker-compose.yml
+      mode: '0644'
+  - name: running selenoid via docker compose
+    shell: docker compose up -d
+    args:
+      chdir: /root/selenoid

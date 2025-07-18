@@ -1,0 +1,79 @@
+---
+- name: configure server for docker-compose
+  hosts: server
+  become: true
+  tasks:
+    - name: remove old keys
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - /etc/apt/keyrings/docker.asc
+        - /etc/apt/sources.list.d/download_docker_com_linux_ubuntu.list
+    - name: update cache
+      apt:
+        update_cache: yes
+    - name: install additional packages
+      apt:
+        name: curl
+        state: present
+    - name: add gpu key from docker repo
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: add docker repo
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+        state: present
+    - name: update cache
+      apt:
+        update_cache: yes
+    - name: install docker
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-compose-plugin
+    - name: enable docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    - name: install docker-compose
+      get_url:
+        url: https://github.com/docker/compose/releases/download/v2.38.2/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+        dest: /usr/local/bin/docker-compose
+        mode: '0755'
+    - name: add user to docker group
+      user:
+        name: "{{ ansible_user_id }}"
+        groups: docker
+        append: yes
+    - name: change docker.sock permissions
+      file:
+        path: /var/run/docker.sock
+        state: file
+        mode: '0666'
+    - name: create browser.json
+      template:
+        src: templates/browsers.json.j2
+        dest: /root/selenoid
+      vars:
+        chrome_version1: "128.0"
+        chrome_version2: "127.0"
+#    - name: create docker-compose.json
+#      template:
+#        src: templates/docker-compose.json.j2
+#        dest: /root/selenoid
+#      vars:
+#        chrome_version1: "128.0"
+#        chrome_version2: "127.0"
+    - name: running selenoid via docker compose
+      shell: docker network up -d
+      args:
+        chdir: /root/selenoid
+
+

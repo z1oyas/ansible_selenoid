@@ -1,0 +1,8 @@
+---
+- name: configure server for docker-compose
+  hosts: server
+  become: true
+  roles:
+    - docker
+    - docker_compose
+    - selenoid
