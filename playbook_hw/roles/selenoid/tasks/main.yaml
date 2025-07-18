@@ -4,24 +4,27 @@
       path: /root/selenoid
       state: directory
       mode: '0755'
-  - name: create browsers.json
-    template:
-      src: templates/browsers.json.j2
-      dest: /root/selenoid/browsers.json
-    vars:
-      browsers:
-        - name: "chrome"
-          versions:
-            - "128.0"
-            - "127.0"
-        - name: "firefox"
-          versions:
-            - "125.0"
   - name: Create grid-router parent directory
     file:
       path: /root/selenoid/grid-router
       state: directory
       mode: '0755'
+  - name: create browsers.json
+    template:
+      src: templates/browsers.json.j2
+      dest: /root/selenoid/grid-router/browsers.json
+    vars:
+      browsers:
+        - name: "chrome"
+          versions:
+            - version: "128.0"
+              path: "/"
+            - version: "127.0"
+              path: "/"
+        - name: "vnc_firefox"
+          versions:
+            - version: "125.0"
+              path: "/wd/hub"
   - name: Create grid-router quota directories
     file:
       path: /root/selenoid/grid-router/quota
@@ -56,3 +59,7 @@
     shell: docker compose up -d
     args:
       chdir: /root/selenoid
+    register: compose_result
+  - name: Show compose output
+    debug:
+      var: compose_result

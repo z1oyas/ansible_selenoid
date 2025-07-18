@@ -1,13 +1,13 @@
 {
 {% for browser in browsers %}
   "{{ browser.name }}": {
-    "default": "{{ browser.versions[0] }}",
+    "default": "{{ browser.versions[0].version }}",
     "versions": {
 {% for version in browser.versions %}
-      "{{ version }}": {
-        "image": "selenoid/{{ browser.name }}:{{ version }}",
+      "{{ version.version }}": {
+        "image": "selenoid/{{ browser.name }}:{{ version.version }}",
         "port": "4444",
-        "path": "/"
+        "path": "{{ version.path }}"
       }{% if not loop.last %},{% endif %}
 {% endfor %}
     }

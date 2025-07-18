@@ -8,7 +8,7 @@ services:
       - selenoid_net1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/selenoid/browsers.json:/etc/selenoid/browsers.json:ro
+      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
     command: -container-network selenoid_net1 -limit 10
 
   selenoid2:
@@ -19,7 +19,7 @@ services:
       - selenoid_net2
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/selenoid/browsers.json:/etc/selenoid/browsers.json:ro
+      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
     command: -container-network selenoid_net2 -limit 10
 
   ggr:
