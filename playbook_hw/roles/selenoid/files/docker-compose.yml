@@ -5,7 +5,8 @@ services:
     container_name: selenoid1
     hostname: selenoid1
     networks:
-      - selenoid_net1
+      selenoid_net1:
+        ipv4_address: 172.20.0.10
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
@@ -16,7 +17,8 @@ services:
     container_name: selenoid2
     hostname: selenoid2
     networks:
-      - selenoid_net2
+      selenoid_net2:
+        ipv4_address: 172.21.0.10
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
@@ -73,5 +75,13 @@ services:
 networks:
   selenoid_net1:
     name: selenoid_net1
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
   selenoid_net2:
     name: selenoid_net2
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
