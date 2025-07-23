@@ -14,7 +14,7 @@
             </region>
         </version>
     </browser>
-    <browser name="vnc_firefox" defaultVersion="125.0">
+    <browser name="firefox" defaultVersion="125.0">
         <version number="125.0">
             <region name="1">
                 <host name="172.20.0.10" port="4444" count="1"/>

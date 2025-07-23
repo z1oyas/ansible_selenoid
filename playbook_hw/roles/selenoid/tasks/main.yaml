@@ -21,7 +21,7 @@
               path: "/"
             - version: "127.0"
               path: "/"
-        - name: "vnc_firefox"
+        - name: "firefox"
           versions:
             - version: "125.0"
               path: "/wd/hub"
@@ -63,3 +63,8 @@
   - name: Show compose output
     debug:
       var: compose_result
+  - name: Add iptables rule for Docker network masquerading
+    shell: iptables -t nat -A POSTROUTING -s {{ item }} ! -o docker0 -j MASQUERADE
+    loop:
+      - 172.20.0.0/24
+      - 172.21.0.0/24
