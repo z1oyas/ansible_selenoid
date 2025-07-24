@@ -10,7 +10,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
-    command: -container-network selenoid_net1 -limit 10
+      - ./video:/opt/selenoid/video
+    command: -container-network selenoid_net1 -limit 10 -video-output-dir /opt/selenoid/video
 
   selenoid2:
     image: aerokube/selenoid:1.11.3
@@ -22,7 +23,8 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
-    command: -container-network selenoid_net2 -limit 10
+      - ./video:/opt/selenoid/video
+    command: -container-network selenoid_net2 -limit 10 -video-output-dir /opt/selenoid/video
 
   ggr:
     image: aerokube/ggr:1.7.2
