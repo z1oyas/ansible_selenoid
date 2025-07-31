@@ -1,0 +1,10 @@
+{
+"request":{
+"url":"/user/get/all",
+"method": "GET"
+},
+"response":{
+"status":200,
+"body":"[{ \"name\": \"Test user\", \"cource\": \"QA\", \"email\": \"test@test.test\",\"age\": 23}]"
+}
+}

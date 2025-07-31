@@ -35,6 +35,25 @@
       src: grid-router/quota/test.xml
       dest: /root/selenoid/grid-router/quota
       mode: '0644'
+  - name: Create wiremock directory
+    file:
+      path: /root/selenoid/wiremock
+      state: directory
+      mode: '0755'
+  - name: Create wiremock_stubs directory
+    file:
+      path: /root/selenoid/wiremock/wiremock_stubs
+      state: directory
+      mode: '0755'
+  - name: Copy wiremock stubs
+    copy:
+      src: wiremock/wiremock_stubs/{{ item }}
+      dest: /root/selenoid/wiremock/wiremock_stubs/{{ item }}
+      mode: '0644'
+    loop:
+      - course_get_all.json
+      - user_get_id.json
+      - user_get_all.json
   - name: Create nginx parent directory
     file:
       path: /root/selenoid/nginx
