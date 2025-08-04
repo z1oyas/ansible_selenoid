@@ -54,6 +54,9 @@
       - course_get_all.json
       - user_get_id.json
       - user_get_all.json
+      - soap_course_get_all.json
+      - soap_user_get_all.json
+      - soap_user_get_id.json
   - name: Create nginx parent directory
     file:
       path: /root/selenoid/nginx
@@ -87,3 +90,7 @@
     loop:
       - 172.20.0.0/24
       - 172.21.0.0/24
+  - name: restart wiremock
+    shell: docker compose up -d --force-recreate wiremock
+    args:
+      chdir: /root/selenoid

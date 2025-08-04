@@ -1,0 +1,24 @@
+{
+  "request":{
+    "url": "/soap/course/get/all",
+    "method" : "POST",
+    "bodyPatterns": [
+      {
+        "contains": "GetCourses"
+      }
+    ],
+    "headers": {
+      "Content-Type": {
+        "contains": "text/xml"
+      }
+    }
+  },
+  "response":{
+    "status" :200,
+    "headers": {
+      "Content-Type": "text/xml; charset=utf-8"
+    },
+    "body" : "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Body>\n      <GetCoursesResponse xmlns=\"http://tempuri.org/\">\n         <CourseList>\n            <Course>\n               <name>QA java</name>\n               <price>15000</price>\n              </Course>\n            <Course>\n               <name>Java</name>\n               <price>12000</price>\n             </Course>\n         </CourseList>\n  </GetCoursesResponse>\n   </soapenv:Body>\n</soapenv:Envelope>\n"
+
+  }
+}

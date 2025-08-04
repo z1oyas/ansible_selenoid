@@ -1,0 +1,23 @@
+{
+  "request":{
+    "url": "/soap/user/get/all",
+    "method" : "POST",
+    "bodyPatterns": [
+      {
+        "contains": "GetAllUsers"
+      }
+    ],
+    "headers": {
+      "Content-Type": {
+        "contains": "text/xml"
+      }
+    }
+  },
+  "response":{
+    "status" :200,
+    "headers": {
+      "Content-Type": "text/xml; charset=utf-8"
+    },
+    "body" : "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Body>\n      <GetUsersResponse xmlns=\"http://tempuri.org/\">\n         <UserList>\n            <User>\n               <name>Test user</name>\n               <cource>QA</cource>\n               <email>test@test.test</email>\n               <age>23</age>\n            </User>\n         </UserList>\n      </GetUsersResponse>\n   </soapenv:Body>\n</soapenv:Envelope>\n"
+  }
+}
