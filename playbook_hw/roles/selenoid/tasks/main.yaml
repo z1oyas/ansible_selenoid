@@ -9,6 +9,16 @@
       path: /root/selenoid/grid-router
       state: directory
       mode: '0755'
+  - name: Create jenkins parent directory
+    file:
+      path: /root/selenoid/jenkins
+      state: directory
+      mode: '0755'
+  - name: Create jenkins jenkins_home directories
+    file:
+      path: /root/selenoid/jenkins/jenkins_home
+      state: directory
+      mode: '0755'
   - name: create browsers.json
     template:
       src: templates/browsers.json.j2

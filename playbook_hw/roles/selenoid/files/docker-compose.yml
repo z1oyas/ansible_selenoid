@@ -9,7 +9,7 @@ services:
         ipv4_address: 172.20.0.10
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
+      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro
       - ./video:/opt/selenoid/video
     command: -container-network selenoid_net1 -limit 10 -video-output-dir /opt/selenoid/video
 
@@ -22,7 +22,7 @@ services:
         ipv4_address: 172.21.0.10
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro  # Изменено
+      - ./grid-router/browsers.json:/etc/selenoid/browsers.json:ro
       - ./video:/opt/selenoid/video
     command: -container-network selenoid_net2 -limit 10 -video-output-dir /opt/selenoid/video
 
@@ -62,15 +62,53 @@ services:
       - selenoid_net1
     command: --selenoid-uri http://ggr_ui:8888
 
+  registry:
+    image: registry:latest
+    container_name: registry
+    hostname: registry
+    restart: always
+    ports:
+      - 5005:5005
+    volumes:
+      - ./jenkins/registry:/var/lib/registry
+    networks:
+      - selenoid_net1
+
+  jenkins:
+    image: jenkins/jenkins:2.522-jdk21
+    container_name: jenkins
+    hostname: jenkins
+    restart: always
+    privileged: true
+    depends_on:
+      - registry
+    user: root
+    environment:
+      JAVA_OPTS: "-Dhudson.model.DownloadService.noSignatureCheck=true -Dhudson.model.DirectoryBrowserSupport.CSP=\"sandbox allow-scripts allow-same-origin; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';\""
+      DOCKER_OPTS: "-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"
+      DOCKER_HOST: "unix:///var/run/docker.sock"
+      JENKINS_OPTS: "--prefix=/jenkins"
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - selenoid_net1
+
   nginx:
     image: nginx:latest
+    container_name: nginx
+    hostname: nginx
+    restart: always
+    privileged: true
     depends_on:
       - ggr
       - selenoid-ui
+      - jenkins
     ports:
       - 80:80
     volumes:
       - ./nginx:/etc/nginx/conf.d:ro
+      - /etc/localtime:/etc/localtime:ro
     networks:
       - selenoid_net1
 
