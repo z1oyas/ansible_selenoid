@@ -83,8 +83,15 @@ services:
     depends_on:
       - registry
     user: root
+    ports:
+      - 8080:8080
     environment:
-      JAVA_OPTS: "-Dhudson.model.DownloadService.noSignatureCheck=true -Dhudson.model.DirectoryBrowserSupport.CSP=\"sandbox allow-scripts allow-same-origin; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';\""
+      JAVA_OPTS: >-
+        -Dhudson.model.DownloadService.noSignatureCheck=true 
+        -Dhudson.model.DirectoryBrowserSupport.CSP="sandbox allow-scripts allow-same-origin; default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+        -Dhudson.model.UpdateCenter.never=true
+        -Dcom.sun.net.ssl.checkRevocation=false
+        -Djava.net.useSystemProxies=true
       DOCKER_OPTS: "-H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock"
       DOCKER_HOST: "unix:///var/run/docker.sock"
       JENKINS_OPTS: "--prefix=/jenkins"
