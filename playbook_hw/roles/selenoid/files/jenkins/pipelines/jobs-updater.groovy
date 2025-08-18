@@ -16,7 +16,7 @@ keep_descriptors=False
 
 [jenkins]
 url=http://localhost/jenkins/
-username=${userName}
+user=${userName}
 password=${userPassword}
 """
                 echo "конифг файл job.ini"
