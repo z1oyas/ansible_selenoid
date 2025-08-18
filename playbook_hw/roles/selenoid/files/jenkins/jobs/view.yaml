@@ -1,0 +1,18 @@
+---
+- view:
+    name: QA
+    view-type: list
+    description: |
+      '<h2 style="color: green;">QA view</h2>'
+    filter-executors: true
+    filter-queue: true
+    job-name:
+      - 'update-jobs'
+    columns:
+      - status
+      - weather
+      - job
+      - last-success
+      - last-failure
+      - last-duration
+      - build-button

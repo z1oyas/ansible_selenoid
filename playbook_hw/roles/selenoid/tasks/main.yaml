@@ -19,6 +19,21 @@
       path: /root/selenoid/jenkins/jenkins_home
       state: directory
       mode: '0755'
+  - name: Create jenkins slaves directories
+    file:
+      path: /root/selenoid/jenkins/slaves
+      state: directory
+      mode: '0755'
+  - name: copy Dockerfile.maven
+    copy:
+      src: jenkins/slaves/Dockerfile.maven
+      dest: /root/selenoid/jenkins/slaves/Dockerfile.maven
+      mode: '0644'
+  - name: Create jenkins jobs directory
+    file:
+      path: /root/selenoid/jenkins/jobs
+      state: directory
+      mode: '0755'
   - name: create browsers.json
     template:
       src: templates/browsers.json.j2

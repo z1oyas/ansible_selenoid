@@ -68,7 +68,7 @@ services:
     hostname: registry
     restart: always
     ports:
-      - 5005:5005
+      - 5005:5000
     volumes:
       - ./jenkins/registry:/var/lib/registry
     networks:

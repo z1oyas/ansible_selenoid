@@ -1,0 +1,8 @@
+FROM jenkins/agent:jdk17
+
+USER root
+
+RUN apt-get update -y
+RUN apt-get install -y python3 \
+    && apt-get install -y python3-pip \
+    && apt-get install -y python3-jenkins-job-builder

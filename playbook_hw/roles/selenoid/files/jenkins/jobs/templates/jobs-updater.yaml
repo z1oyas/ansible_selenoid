@@ -1,0 +1,17 @@
+- job-template:
+    name: 'update-jobs'
+    description: '<h3 style="color: green;">update-jobs</h3>'
+    project-type: pipeline
+    concurrent: false
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: REFSPEC
+          default: main
+          description: Branch for update jobs
+    pipeline-scm:
+      scm:
+        - git-job-updater
+      script-path: ./pipelines/jobs-updater.groovy
