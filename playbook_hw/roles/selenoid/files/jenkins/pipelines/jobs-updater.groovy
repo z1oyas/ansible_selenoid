@@ -21,7 +21,7 @@ password=${userPassword}
 """
                 echo "конифг файл job.ini"
                 sh "echo '${iniConfig}' > job.ini"
-                writeFile(file: 'config.ini', text: iniConfig, encoding: "UTF-8")
+                writeFile(file: 'job.ini', text: iniConfig, encoding: "UTF-8")
             }
         }
 
