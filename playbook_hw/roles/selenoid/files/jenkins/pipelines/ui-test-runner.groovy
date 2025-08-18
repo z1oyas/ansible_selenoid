@@ -13,7 +13,7 @@ timeout(1200){
             }
             stage("Running UI Automation") {
                 def status = sh(
-                        script: "dcoker run --rm --name=ui_tests --env-file envs/.env --network=host -v $pwd/allure:/root/ui_tests/allure-results lockalhost:5005/ui_tests:1.0.0",
+                        script: "docker run --rm --name=ui_tests --env-file envs/.env --network=host -v $pwd/allure:/root/ui_tests/allure-results lockalhost:5005/ui_tests:1.0.0",
                         returnStatus: true
                 )
                 if (status > 0) {
