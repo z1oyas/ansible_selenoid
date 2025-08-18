@@ -14,4 +14,4 @@
     pipeline-scm:
       scm:
         - git-job-updater
-      script-path: ./pipelines/jobs-updater.groovy
+      script-path: ./playbook_hw/roles/selenoid/files/jenkins/pipelines/jobs-updater.groovy

@@ -18,15 +18,17 @@ keep_descriptors=False
 url=http://localhost/jenkins/
 username=${userName}
 password=${userPassword}
+timeout=60
 """
                 echo "конифг файл job.ini"
-                sh "echo '${iniConfig}' > job.ini"
-                writeFile(file: 'job.ini', text: iniConfig, encoding: "UTF-8")
+                writeFile(file: 'playbook_hw/roles/selenoid/files/jenkins/job.ini', text: iniConfig, encoding: "UTF-8")
             }
         }
 
         stage("Upload jobs") {
-            sh "jenkins-jobs --conf ./job.ini update ./../jobs/"
-        }
+            dir('playbook_hw/roles/selenoid/files/jenkins/') {
+                sh "jenkins-jobs --conf ./job.ini update ./jobs/"
+                }
+            }
     }
 }
