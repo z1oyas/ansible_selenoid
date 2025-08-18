@@ -1,7 +1,7 @@
 def GLOBAL = []
 
 timeout(1200) {
-    node("maven") {
+    node("python") {
         stage('checkout') {
             echo "код из репозитория"
             checkout scm
