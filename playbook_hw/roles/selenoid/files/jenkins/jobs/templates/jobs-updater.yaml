@@ -9,7 +9,7 @@
     parameters:
       - string:
           name: REFSPEC
-          default: main
+          default: jenkins
           description: Branch for update jobs
     pipeline-scm:
       scm:
