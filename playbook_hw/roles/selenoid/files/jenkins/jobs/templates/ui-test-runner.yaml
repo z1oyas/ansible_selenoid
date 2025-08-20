@@ -1,0 +1,29 @@
+- job-template:
+    name: 'ui-test-runner'
+    description: '<h3 style="color: green;">ui-test-runner</h3>'
+    project-type: pipeline
+    concurrent: false
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: REFSPEC
+          default: main
+          description: Branch
+      - string:
+          name: YAML_CONFIG
+          default:
+          description: config with properties
+      - string:
+          name: chat_id
+          default: "-4970638051"
+          description: Telegram chat for notification
+      - string:
+          name: bot_token
+          default: ""
+          description: Telegram bot token
+    pipeline-scm:
+      scm:
+        - ui-test-runner
+      script-path: ./Jenkinsfile

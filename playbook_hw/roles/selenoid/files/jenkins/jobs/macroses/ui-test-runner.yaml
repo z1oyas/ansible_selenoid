@@ -1,0 +1,10 @@
+---
+- scm:
+    name: ui-test-runner
+    scm:
+      - git:
+          url: https://github.com/z1oyas/otusCourseHomework
+          branches:
+            - '${REFSPEC}'
+          wipe-workspace: false
+          prune: true

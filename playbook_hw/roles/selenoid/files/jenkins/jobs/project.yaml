@@ -3,3 +3,9 @@
     name: job-uploader
     jobs:
       - update-jobs
+
+
+- project:
+    name: ui-tests
+    jobs:
+      - ui-test-runner
