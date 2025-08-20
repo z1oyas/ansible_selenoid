@@ -51,8 +51,6 @@ timeout(1200){
                 browser name: $BROWSER
                 browser version: $BROWSER_VERSION
                 """
-//-4970638051 chat id
-//bot token 8269057546:AAFNVRjY9nx4CbK1Zdd2Xg8NQC4uoL6SD4U
 
                 testsStatistics.each{k,v ->
                     message += "\t\t$k: $v\n"

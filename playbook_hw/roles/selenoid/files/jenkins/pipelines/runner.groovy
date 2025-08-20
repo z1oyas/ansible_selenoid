@@ -1,0 +1,37 @@
+timeout("300"){
+    node("runner"){
+
+        withBuildUser {
+            def user = env.BUILD_USER
+            currentBuild.description = "Running as ${user}"
+        }
+
+        def yamlConfig = readYaml text: $YAML_CONFIG
+        def testTypes = yamlConfig['TEST_TYPES']
+
+        def jobs = []
+        def testsRunning = [:]
+        testTypes.each {type ->
+            testsRunning[type] = node('maven'){
+                stage("running test $type") {
+                    jobs += build(job:"${type}_autotests",parameters: yamlConfig, propagate: false, wait: true)
+                }
+            }
+        }
+        parallel testsRunning
+
+        stage("publish allure results") {
+            jobs.each {job ->
+                copyArtifacts filter: "**/allure-results", projectname: job.upstreamProject, selector: specific("${job.upstreamBuild}")
+            }
+
+            allure([
+                    includeProperties: false,
+                    jdk              : '',
+                    properties       : [],
+                    reportBuildPolicy: 'ALWAYS',
+                    results          : [[path: 'allure-results']]
+            ])
+        }
+    }
+}
