@@ -11,17 +11,16 @@
           name: REFSPEC
           default: main
           description: Branch
-      - string:
+      - text:
           name: YAML_CONFIG
-          default: """
-          browser: chrome
-          base.url: https://otus.ru
-          remote: true
-          browser.version: 127.0
-          enable.video: false
-          enable.vnc: true
-          selenoid.url: http://localhost/wd/hub
-          """
+          default: |
+            browser: chrome
+            base.url: https://otus.ru
+            remote: true
+            browser.version: 127.0
+            enable.video: false
+            enable.vnc: true
+            selenoid.url: http://localhost/wd/hub
           description: config with properties
       - string:
           name: chat_id
