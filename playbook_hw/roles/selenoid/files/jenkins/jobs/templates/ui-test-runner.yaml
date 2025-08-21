@@ -13,7 +13,15 @@
           description: Branch
       - string:
           name: YAML_CONFIG
-          default:
+          default: """
+          browser: chrome
+          base.url: https://otus.ru
+          remote: true
+          browser.version: 127.0
+          enable.video: false
+          enable.vnc: true
+          selenoid.url: http://localhost/wd/hub
+          """
           description: config with properties
       - string:
           name: chat_id
