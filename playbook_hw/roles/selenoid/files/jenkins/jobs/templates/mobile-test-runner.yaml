@@ -1,0 +1,34 @@
+- job-template:
+    name: 'mobile-test-runner'
+    description: '<h3 style="color: green;">mobile-test-runner</h3>'
+    project-type: pipeline
+    concurrent: false
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: REFSPEC
+          default: main
+          description: Branch
+      - text:
+          name: YAML_CONFIG
+          default: |
+            deviceName: emulator-5554
+            base_url: http://172.19.192.1:4723/wd/hub
+            appPackage: com.pyankoff.andy
+            appActivity: .MainActivity
+            noReset: false
+          description: config with properties
+      - string:
+          name: chat_id
+          default: "-4970638051"
+          description: Telegram chat for notification
+      - string:
+          name: bot_token
+          default: ""
+          description: Telegram bot token
+    pipeline-scm:
+      scm:
+        - mobile-test-runner
+      script-path: ./Jenkinsfile

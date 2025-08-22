@@ -1,0 +1,10 @@
+---
+- scm:
+    name: mobile-test-runner
+    scm:
+      - git:
+          url: https://github.com/z1oyas/appiumTests
+          branches:
+            - '${REFSPEC}'
+          wipe-workspace: false
+          prune: true
