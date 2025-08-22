@@ -1,0 +1,10 @@
+---
+- scm:
+    name: rest-test-runner
+    scm:
+      - git:
+          url: https://github.com/z1oyas/otusRest
+          branches:
+            - '${REFSPEC}'
+          wipe-workspace: false
+          prune: true

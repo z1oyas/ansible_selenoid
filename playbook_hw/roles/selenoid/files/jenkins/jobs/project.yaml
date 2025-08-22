@@ -9,3 +9,9 @@
     name: ui-tests
     jobs:
       - ui-test-runner
+
+- project:
+    name: rest-tests
+    jobs:
+      - rest-test-runner
+

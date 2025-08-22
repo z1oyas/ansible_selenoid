@@ -1,4 +1,8 @@
 FROM jenkins/agent:jdk17
 USER root
-RUN apt-get update -y
-RUN apt-get install -y maven -y
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        docker.io \
+        curl \
+        bash && \
+    rm -rf /var/lib/apt/lists/*
