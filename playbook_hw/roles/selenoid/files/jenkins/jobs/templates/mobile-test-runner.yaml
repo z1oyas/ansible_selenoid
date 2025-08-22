@@ -19,6 +19,7 @@
             appPackage: com.pyankoff.andy
             appActivity: .MainActivity
             noReset: false
+            appUrl: http://172.19.192.1:8888/Andy-257946-a51d3d.apk
           description: config with properties
       - string:
           name: chat_id
