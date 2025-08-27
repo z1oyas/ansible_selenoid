@@ -15,14 +15,6 @@
           name: base_url
           default: "https://petstore.swagger.io/v2/"
           description: tests base url
-      - string:
-          name: chat_id
-          default: "-4970638051"
-          description: Telegram chat for notification
-      - string:
-          name: bot_token
-          default: ""
-          description: Telegram bot token
     pipeline-scm:
       scm:
         - rest-test-runner
