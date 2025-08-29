@@ -15,12 +15,12 @@
           name: YAML_CONFIG
           default: |
             browser: chrome
-            base.url: https://otus.ru
+            base_url: https://otus.ru
             remote: true
-            browser.version: 127.0
-            enable.video: false
-            enable.vnc: true
-            selenoid.url: http://localhost/wd/hub
+            browser_version: 127.0
+            enable_video: false
+            enable_vnc: true
+            selenoid_url: http://localhost/wd/hub
           description: config with properties
     pipeline-scm:
       scm:
