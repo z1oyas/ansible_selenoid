@@ -22,14 +22,6 @@
             enable.vnc: true
             selenoid.url: http://localhost/wd/hub
           description: config with properties
-      - string:
-          name: chat_id
-          default: "-4970638051"
-          description: Telegram chat for notification
-      - string:
-          name: bot_token
-          default: ""
-          description: Telegram bot token
     pipeline-scm:
       scm:
         - ui-test-runner
