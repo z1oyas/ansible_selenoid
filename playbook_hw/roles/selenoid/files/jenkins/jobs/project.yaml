@@ -10,10 +10,10 @@
     jobs:
       - ui-test-runner
 
-- project:
-    name: rest-tests
-    jobs:
-      - rest-test-runner
+#- project:
+#    name: rest-tests
+#    jobs:
+#      - rest-test-runner
 
 - project:
     name: wiremock-tests

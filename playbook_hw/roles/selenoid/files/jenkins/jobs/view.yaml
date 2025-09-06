@@ -9,7 +9,7 @@
     job-name:
       - 'update-jobs'
       - 'ui-test-runner'
-      - 'rest-test-runner'
+#      - 'rest-test-runner'
       - 'mobile-test-runner'
       - 'wiremock-test-runner'
     columns:
