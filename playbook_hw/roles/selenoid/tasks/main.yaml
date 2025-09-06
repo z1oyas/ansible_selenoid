@@ -14,9 +14,19 @@
       path: /root/selenoid/jenkins
       state: directory
       mode: '0755'
-  - name: Create jenkins jenkins_home directories
+  - name: Copy job.ini
+    copy:
+      src: jenkins/job.ini
+      dest: /root/selenoid/jenkins/job.ini
+      mode: '0644'
+  - name: Create jenkins jenkins_home directory
     file:
       path: /root/selenoid/jenkins/jenkins_home
+      state: directory
+      mode: '0755'
+  - name: Create jenkins registry directory
+    file:
+      path: /root/selenoid/jenkins/registry
       state: directory
       mode: '0755'
   - name: Create jenkins slaves directories
@@ -24,16 +34,71 @@
       path: /root/selenoid/jenkins/slaves
       state: directory
       mode: '0755'
-  - name: copy Dockerfile.maven
+  - name: Copy slaves files
     copy:
-      src: jenkins/slaves/Dockerfile.maven
-      dest: /root/selenoid/jenkins/slaves/Dockerfile.maven
+      src: jenkins/slaves/{{ item }}
+      dest: /root/selenoid/jenkins/slaves/{{ item }}
       mode: '0644'
+    loop:
+      - Dockerfile.maven
+      - Dockerfile.python
   - name: Create jenkins jobs directory
     file:
       path: /root/selenoid/jenkins/jobs
       state: directory
       mode: '0755'
+  - name: Create jenkins jobs macroses directory
+    file:
+      path: /root/selenoid/jenkins/jobs/macroses
+      state: directory
+      mode: '0755'
+  - name: Copy macroses files
+    copy:
+      src: jenkins/jobs/macroses/{{ item }}
+      dest: /root/selenoid/jenkins/jobs/macroses/{{ item }}
+      mode: '0644'
+    loop:
+        - git-job-updater.yaml
+        - mobile-test-runner.yaml
+        - rest-test-runner.yaml
+        - ui-test-runner.yaml
+  - name: Create jenkins jobs templates directory
+    file:
+      path: /root/selenoid/jenkins/jobs/templates
+      state: directory
+      mode: '0755'
+  - name: Copy templates files
+    copy:
+      src: jenkins/jobs/templates/{{ item }}
+      dest: /root/selenoid/jenkins/jobs/templates/{{ item }}
+      mode: '0644'
+    loop:
+      - jobs-updater.yaml
+      - mobile-test-runner.yaml
+      - rest-test-runner.yaml
+      - ui-test-runner.yaml
+  - name: Copy jobs files
+    copy:
+      src: jenkins/jobs/{{ item }}
+      dest: /root/selenoid/jenkins/jobs/{{ item }}
+      mode: '0644'
+    loop:
+      - global.yaml
+      - project.yaml
+      - view.yaml
+  - name: Create jenkins pipelines directory
+    file:
+      path: /root/selenoid/jenkins/pipelines
+      state: directory
+      mode: '0755'
+  - name: Copy pipelines files
+    copy:
+      src: jenkins/pipelines/{{ item }}
+      dest: /root/selenoid/jenkins/pipelines/{{ item }}
+      mode: '0644'
+    loop:
+      - jobs-updater.groovy
+      - runner.groovy
   - name: create browsers.json
     template:
       src: templates/browsers.json.j2
