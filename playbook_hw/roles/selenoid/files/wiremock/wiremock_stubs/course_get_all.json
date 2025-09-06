@@ -1,0 +1,10 @@
+{
+  "request":{
+    "url": "/course/get/all",
+    "method" : "GET"
+  },
+  "response":{
+    "status" :200,
+    "body" : "[{\"name\": \"QA java\",\"price\": 15000},{\"name\": \"Java\",\"price\": 12000}]"
+  }
+}

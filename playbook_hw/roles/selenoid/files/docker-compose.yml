@@ -62,6 +62,15 @@ services:
       - selenoid_net1
     command: --selenoid-uri http://ggr_ui:8888
 
+  wiremock:
+    image: wiremock/wiremock:3.13.1
+    container_name: wiremock
+    hostname: wiremock
+    volumes:
+      - ./wiremock/wiremock_stubs:/home/wiremock/mappings
+    networks:
+      - selenoid_net1
+
   registry:
     image: registry:latest
     container_name: registry
@@ -111,6 +120,7 @@ services:
       - ggr
       - selenoid-ui
       - jenkins
+      - wiremock
     ports:
       - 80:80
     volumes:

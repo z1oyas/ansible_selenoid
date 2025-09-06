@@ -11,6 +11,7 @@
       - 'ui-test-runner'
       - 'rest-test-runner'
       - 'mobile-test-runner'
+      - 'wiremock-test-runner'
     columns:
       - status
       - weather

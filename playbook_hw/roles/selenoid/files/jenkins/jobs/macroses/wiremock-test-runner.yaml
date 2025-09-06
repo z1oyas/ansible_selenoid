@@ -1,0 +1,10 @@
+---
+- scm:
+    name: wiremock-test-runner
+    scm:
+      - git:
+          url: https://github.com/z1oyas/WiremockTest
+          branches:
+            - '${REFSPEC}'
+          wipe-workspace: false
+          prune: true

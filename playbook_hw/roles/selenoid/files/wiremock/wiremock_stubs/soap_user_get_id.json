@@ -1,0 +1,23 @@
+{
+  "request":{
+    "urlPattern": "/soap/user/get/.*",
+    "method" : "POST",
+    "bodyPatterns": [
+      {
+        "contains": "GetUser"
+      }
+    ],
+    "headers": {
+      "Content-Type": {
+        "contains": "text/xml"
+      }
+    }
+  },
+  "response":{
+    "status" :200,
+    "headers": {
+      "Content-Type": "text/xml; charset=utf-8"
+    },
+    "body" : "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\">\n   <soapenv:Body>\n      <GetScoreResponse xmlns=\"http://tempuri.org/\">\n         <name>Test user</name>\n         <score>78</score>\n      </GetScoreResponse>\n   </soapenv:Body>\n</soapenv:Envelope>\n"
+  }
+}

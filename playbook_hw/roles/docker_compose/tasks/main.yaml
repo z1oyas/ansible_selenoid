@@ -27,6 +27,11 @@
       name: selenoid/video-recorder
       tag: latest-release
       source: pull
+  - name: Pull wiremock video recorder image
+    docker_image:
+      name: wiremock/wiremock
+      tag: 3.13.1
+      source: pull
 #  - name: make directory work
 #    file:
 #      path: /root/selenoid

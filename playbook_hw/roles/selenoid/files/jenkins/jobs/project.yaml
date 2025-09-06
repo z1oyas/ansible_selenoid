@@ -16,6 +16,11 @@
       - rest-test-runner
 
 - project:
+    name: wiremock-tests
+    jobs:
+      - wiremock-test-runner
+
+- project:
     name: mobile-tests
     jobs:
       - mobile-test-runner

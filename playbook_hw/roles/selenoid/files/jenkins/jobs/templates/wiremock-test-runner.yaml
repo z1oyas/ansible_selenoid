@@ -1,0 +1,21 @@
+- job-template:
+    name: 'wiremock-test-runner'
+    description: '<h3 style="color: green;">wiremock-test-runner</h3>'
+    project-type: pipeline
+    concurrent: false
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: REFSPEC
+          default: main
+          description: Branch
+      - string:
+          name: base_url
+          default: "http://localhost"
+          description: tests base url
+    pipeline-scm:
+      scm:
+        - wiremock-test-runner
+      script-path: ./Jenkinsfile
