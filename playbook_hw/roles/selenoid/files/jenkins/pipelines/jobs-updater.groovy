@@ -24,12 +24,6 @@ password=${userPassword}
             }
         }
 
-        stage("One-time cleanup") {
-            dir('playbook_hw/roles/selenoid/files/jenkins/') {
-                sh "jenkins-jobs --conf ./job.ini delete 'rest-test-runner' || true"
-            }
-        }
-
         stage("Upload jobs") {
             dir('playbook_hw/roles/selenoid/files/jenkins/') {
                 sh "jenkins-jobs --conf ./job.ini update ./jobs/"
