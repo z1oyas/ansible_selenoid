@@ -1,12 +1,12 @@
 timeout("300"){
-    node("runner"){
+    node("python") {
 
         withBuildUser {
             def user = env.BUILD_USER
             currentBuild.description = "Running as ${user}"
         }
 
-        def yamlConfig = readYaml text: $YAML_CONFIG
+        def yamlConfig = readYaml text: params.YAML_CONFIG
         def testTypes = yamlConfig['TEST_TYPES']
 
         def jobs = []
@@ -14,7 +14,7 @@ timeout("300"){
         testTypes.each {type ->
             testsRunning[type] = node('maven'){
                 stage("running test $type") {
-                    jobs += build(job:"${type}_autotests",parameters: yamlConfig, propagate: false, wait: true)
+                    jobs += build(job:"${type}-test-runner", propagate: false, wait: true)
                 }
             }
         }

@@ -1,0 +1,11 @@
+---
+- scm:
+    name: runner
+    scm:
+      - git:
+          url: https://github.com/z1oyas/ansible_selenoid
+          credentials-id: jenkins
+          branches:
+            - '${REFSPEC}'
+          wipe-workspace: false
+          prune: true

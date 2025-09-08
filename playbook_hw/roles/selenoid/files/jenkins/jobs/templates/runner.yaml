@@ -1,0 +1,23 @@
+- job-template:
+    name: 'runner'
+    description: '<h3 style="color: green;">all tests runner</h3>'
+    project-type: pipeline
+    concurrent: false
+    properties:
+      - build-discarder:
+          num-to-keep: 10
+    parameters:
+      - string:
+          name: REFSPEC
+          default: main
+          description: Branch
+      - text:
+          name: YAML_CONFIG
+          default: |
+            TEST_TYPES: 
+            - wiremock-test-runner
+          description: jobs to run
+    pipeline-scm:
+      scm:
+        - runner
+      script-path: ./playbook_hw/roles/selenoid/files/jenkins/pipelines/runner.groovy

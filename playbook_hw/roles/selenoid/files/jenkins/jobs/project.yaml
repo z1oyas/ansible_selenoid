@@ -25,3 +25,8 @@
     jobs:
       - mobile-test-runner
 
+- project:
+    name: runner
+    jobs:
+      - runner
+
