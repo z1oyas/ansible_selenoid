@@ -25,7 +25,7 @@ timeout("300"){
 
         stage("publish allure results") {
             jobs.each {job ->
-                copyArtifacts filter: "**/allure-results", projectname: job.getProjectName(), selector: specific("${job.getNumber()}")
+                copyArtifacts filter: "**/allure-results", projectName: job.getProjectName(), selector: specific("${job.getNumber()}")
             }
 
             allure([
