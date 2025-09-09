@@ -9,22 +9,20 @@ timeout("300"){
         def yamlConfig = readYaml text: params.YAML_CONFIG
         def testTypes = yamlConfig['TEST_TYPES']
 
-        def jobResults = [:]
         def testsRunning = [:]
+
         testTypes.each { type ->
             testsRunning[type] = {
                 node('maven') {
                     stage("running test $type") {
-                        def jobResult = build(job:"${type}", propagate: false, wait: true)
-                        synchronized(jobResults) {
-                            jobResults[type] = jobResult
-                        }
+                        return build(job:"${type}", propagate: false, wait: true)
                     }
                 }
             }
         }
 
-        parallel testsRunning
+        // Параллельное выполнение возвращает Map с результатами
+        def jobResults = parallel testsRunning
 
         stage("publish allure results") {
             sh "mkdir -p allure-results"
