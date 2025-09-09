@@ -24,14 +24,20 @@ timeout("300"){
         parallel testsRunning
 
         stage("publish allure results") {
+            sh "mkdir -p allure-results"
+
             jobs.each {job ->
+                def jobName = job.getProjectName()
+                def jobNumber = job.getNumber()
                 copyArtifacts(
                         filter: "allure-results/**",
-                        projectName: job.getProjectName(),
-                        selector: specific("${job.getNumber()}"),
-                        target: 'allure-results',
-                        flatten: true
-                )            }
+                        projectName: jobName,
+                        selector: specific("${jobNumber}"),
+                        target: "results-${jobName}"
+                )
+                sh "cp -r results-${jobName}/allure-results/* allure-results/"
+                sh "rm -rf results-${jobName}"
+            }
 
             allure([
                     includeProperties: false,
