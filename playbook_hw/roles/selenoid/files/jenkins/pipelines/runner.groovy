@@ -9,13 +9,16 @@ timeout("300"){
         def yamlConfig = readYaml text: params.YAML_CONFIG
         def testTypes = yamlConfig['TEST_TYPES']
 
-        def jobs = []
+        def jobResults = [:]
         def testsRunning = [:]
         testTypes.each { type ->
             testsRunning[type] = {
                 node('maven') {
                     stage("running test $type") {
-                        jobs += build(job:"${type}", propagate: false, wait: true)
+                        def jobResult = build(job:"${type}", propagate: false, wait: true)
+                        synchronized(jobResults) {
+                            jobResults[type] = jobResult
+                        }
                     }
                 }
             }
@@ -26,9 +29,14 @@ timeout("300"){
         stage("publish allure results") {
             sh "mkdir -p allure-results"
 
-            jobs.each {job ->
+            echo "Found ${jobResults.size()} completed jobs"
+
+            jobResults.each { testType, job ->
                 def jobName = job.getProjectName()
                 def jobNumber = job.getNumber()
+
+                echo "Processing job: ${jobName} #${jobNumber}"
+
                 copyArtifacts(
                         filter: "allure-results/**",
                         projectName: jobName,
@@ -37,7 +45,12 @@ timeout("300"){
                 )
                 sh "cp -r results-${jobName}/allure-results/* allure-results/"
                 sh "rm -rf results-${jobName}"
+
+                echo "Completed copying artifacts from ${jobName}"
             }
+
+            // Проверяем что файлы скопировались
+            sh "ls -la allure-results/"
 
             allure([
                     includeProperties: false,
