@@ -14,7 +14,7 @@ timeout("300"){
         testTypes.each {type ->
             testsRunning[type] = node('maven'){
                 stage("running test $type") {
-                    jobs += build(job:"${type}-test-runner", propagate: false, wait: true)
+                    jobs += build(job:"${type}", propagate: false, wait: true)
                 }
             }
         }
