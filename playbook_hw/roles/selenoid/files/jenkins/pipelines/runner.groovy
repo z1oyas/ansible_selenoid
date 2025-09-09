@@ -11,13 +11,16 @@ timeout("300"){
 
         def jobs = []
         def testsRunning = [:]
-        testTypes.each {type ->
-            testsRunning[type] = node('maven'){
-                stage("running test $type") {
-                    jobs += build(job:"${type}", propagate: false, wait: true)
+        testTypes.each { type ->
+            testsRunning[type] = {
+                node('maven') {
+                    stage("running test $type") {
+                        jobs += build(job:"${type}", propagate: false, wait: true)
+                    }
                 }
             }
         }
+
         parallel testsRunning
 
         stage("publish allure results") {
